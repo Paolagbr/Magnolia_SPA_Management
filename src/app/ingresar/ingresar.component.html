@@ -3,12 +3,12 @@
     <div class="col-12 d-flex align-items-center justify-content-center">
       <div class="row d-flex align-items-center bg-img shadow">
 
- 
+
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 p-4">
           <img src="./logo1A.png" alt="login" class="illustration animation">
         </div>
 
-    
+
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 p-0">
           <div class="login-container p-4">
 
@@ -18,149 +18,87 @@
               <button class="btn btn-light btn-lg rounded-pill w-100 mb-2" (click)="googleAuth()">
                 <i class="fab fa-google"></i>
                 <span class="text-dark fs-6 ps-2">Iniciar sesión con Google</span> </button>
-
+              <!-- 
               <button class="btn btn-light btn-lg rounded-pill w-100 mb-3">
                 <i class="fab fa-facebook"></i>
                 <span class="text-dark fs-6 ps-2">Iniciar sesión con Facebook</span> </button>
-            </div>
+            </div> -->
 
-            <!-- Separador -->
-            <div class="row d-flex align-items-center">
-              <div class="col">
-                <hr>
-              </div>
-              <div class="col-5 my-2 text-center"><small>O inicia sesión con correo</small></div>
-              <div class="col">
-                <hr>
-              </div>
-            </div>
-
-            <!-- Formulario Angular -->
-            <form [formGroup]="IngresarSesion" (ngSubmit)="onSubmit()" class="mt-3">
-
-              <!-- Email -->
-              <mat-form-field appearance="outline" class="w-100 mb-3">
-                <mat-label>Email</mat-label>
-                <input matInput formControlName="email" required>
-                <mat-icon matPrefix>email</mat-icon>
-
-                @if (IngresarSesion.get('email')?.invalid && (IngresarSesion.get('email')?.dirty ||
-                IngresarSesion.get('email')?.touched)) {
-                <mat-error>El correo es requerido.</mat-error>
-                }
-              </mat-form-field>
-
-              <!-- Contraseña -->
-              <mat-form-field appearance="outline" class="w-100 mb-3">
-                <mat-label>Contraseña</mat-label>
-                <input matInput [type]="hide() ? 'password' : 'text'" formControlName="password" required>
-                <!-- <button   type="button" mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Ocultar contraseña'"
-                  [attr.aria-pressed]="hide()">
-                  <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
-                </button> -->
-                <button type="button" mat-icon-button matSuffix (click)="clickEvent($event)"
-                  [attr.aria-label]="'Ocultar contraseña'" [attr.aria-pressed]="hide()">
-                  <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
-                </button>
-
-
-
-                @if (IngresarSesion.get('password')?.invalid && (IngresarSesion.get('password')?.dirty ||
-                IngresarSesion.get('password')?.touched)) {
-                <mat-error>La contraseña es requerida.</mat-error>
-                }
-              </mat-form-field>
-
-              <!-- Recordar / Olvidó -->
-              <div class="d-flex justify-content-between align-items-center mb-3">
-                <div>
-                  <a routerLink="/recuperar" class="text-xs text-decoration-none">Recuperar cuenta</a>
+              <!-- Separador -->
+              <div class="row d-flex align-items-center">
+                <div class="col">
+                  <hr>
+                </div>
+                <div class="col-5 my-2 text-center"><small>O inicia sesión con correo</small></div>
+                <div class="col">
+                  <hr>
                 </div>
               </div>
 
+              <!-- Formulario Angular -->
+              <form [formGroup]="IngresarSesion" (ngSubmit)="onSubmit()" class="mt-3">
 
-              <re-captcha [siteKey]="siteKey" (resolved)="onCaptchaResolved($event)" formControlName="recaptcha">
-              </re-captcha><br />
-              <!-- <div   #captchaContainer class="g-recaptcha" [attr.data-sitekey]="siteKey" data-callback="onCaptchaSuccess"
-                data-expired-callback="onCaptchaExpired">
-              </div> -->
-
-              <!-- Botón -->
-              <button mat-raised-button color="primary" type="submit" class="w-100 rounded-pill"
-                [disabled]="IngresarSesion.invalid">
-                Ingresar
-              </button>
-
-
-              <div class="text-center mt-3">
-                <span class="text-muted">¿No tienes cuenta?</span>
-                <a routerLink="/usuario" class="text-primary text-decoration-none ms-1">Crear cuenta</a>
-              </div>
-
-            </form>
-
-            
-            <div class="row d-flex align-items-center mt-4">
-              <div class="col">
-                <hr>
-              </div>
-              <div class="col-5 my-2 text-center"><small>O inicia sesión con teléfono</small></div>
-              <div class="col">
-                <hr>
-              </div>
-            </div>
-
-          
-            <form [formGroup]="PhoneAuthForm" class="mt-3">
-              
-              <mat-form-field appearance="outline" class="w-100 mb-3">
-                <mat-label>Número de Teléfono (ej: +521234567890)</mat-label>
-                <input matInput type="tel" formControlName="phoneNumber" required>
-                <mat-icon matPrefix>phone</mat-icon>
-                @if (PhoneAuthForm.get('phoneNumber')?.invalid && (PhoneAuthForm.get('phoneNumber')?.dirty ||
-                PhoneAuthForm.get('phoneNumber')?.touched)) {
-                <mat-error>El número de teléfono es requerido y debe incluir el código de país (ej: +52...).</mat-error>
-                }
-              </mat-form-field>
-
-              
-              <div id="recaptcha-container" #recaptchaContainer class="mb-3"></div>
-
-           
-              <button mat-raised-button color="accent" type="button" class="w-100 rounded-pill mb-3"
-                (click)="sendCode()" [disabled]="PhoneAuthForm.get('phoneNumber')?.invalid || isLoadingSms()">
-                @if (isLoadingSms()) {
-                  <span>Enviando código...</span>
-                } @else {
-                  <span>Enviar Código SMS</span>
-                }
-              </button>
-
-          
-              @if (showCodeInput()) {
+                <!-- Email -->
                 <mat-form-field appearance="outline" class="w-100 mb-3">
-                  <mat-label>Código de Verificación SMS</mat-label>
-                  <input matInput type="number" formControlName="verificationCode" required maxlength="6">
-                  <mat-icon matPrefix>vpn_key</mat-icon>
-                  @if (PhoneAuthForm.get('verificationCode')?.invalid && (PhoneAuthForm.get('verificationCode')?.dirty ||
-                  PhoneAuthForm.get('verificationCode')?.touched)) {
-                  <mat-error>El código de verificación es requerido y debe tener 6 dígitos.</mat-error>
+                  <mat-label>Email</mat-label>
+                  <input matInput formControlName="email" required>
+                  <mat-icon matPrefix>email</mat-icon>
+
+                  @if (IngresarSesion.get('email')?.invalid && (IngresarSesion.get('email')?.dirty ||
+                  IngresarSesion.get('email')?.touched)) {
+                  <mat-error>El correo es requerido.</mat-error>
                   }
                 </mat-form-field>
 
-                
-                <button mat-raised-button color="primary" type="button" class="w-100 rounded-pill mb-3"
-                  (click)="verifyCode()" [disabled]="PhoneAuthForm.get('verificationCode')?.invalid">
-                  Verificar Código y Entrar
+                <!-- Contraseña -->
+                <mat-form-field appearance="outline" class="w-100 mb-3">
+                  <mat-label>Contraseña</mat-label>
+                  <input matInput [type]="hide() ? 'password' : 'text'" formControlName="password" required>
+                  <!-- <button   type="button" mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Ocultar contraseña'"
+                  [attr.aria-pressed]="hide()">
+                  <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
+                </button> -->
+                  <button type="button" mat-icon-button matSuffix (click)="clickEvent($event)"
+                    [attr.aria-label]="'Ocultar contraseña'" [attr.aria-pressed]="hide()">
+                    <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
+                  </button>
+
+
+
+                  @if (IngresarSesion.get('password')?.invalid && (IngresarSesion.get('password')?.dirty ||
+                  IngresarSesion.get('password')?.touched)) {
+                  <mat-error>La contraseña es requerida.</mat-error>
+                  }
+                </mat-form-field>
+
+                <!-- Recordar / Olvidó -->
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <div>
+                    <a routerLink="/recuperar" class="text-xs text-decoration-none">Recuperar cuenta</a>
+                  </div>
+                </div>
+
+
+                <re-captcha [siteKey]="siteKey" (resolved)="onCaptchaResolved($event)" formControlName="recaptcha">
+                </re-captcha><br />
+                <button mat-raised-button color="primary" type="submit" class="w-100 rounded-pill"
+                  [disabled]="IngresarSesion.invalid">
+                  Ingresar
                 </button>
-              }
-            </form>
 
+
+                <div class="text-center mt-3">
+                  <span class="text-muted">¿No tienes cuenta?</span>
+                  <a routerLink="/usuario" class="text-primary text-decoration-none ms-1">Crear cuenta</a>
+                </div>
+
+              </form>
+
+            </div>
           </div>
-        </div>
 
+        </div>
       </div>
     </div>
   </div>
-</div>
-<div class="container" style="margin-bottom: 20%;"></div>
+  <div class="container" style="margin-bottom: 20%;"></div>

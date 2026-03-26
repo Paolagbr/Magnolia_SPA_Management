@@ -59,7 +59,10 @@ export class CitaComponent implements OnInit {
 
   constructor(private auth: Auth, private http: HttpClient) {}
 
-  private apiUrl = 'https://nodeproyectofinaltw-1.onrender.com'; //Conectar con node, para que permita el envio de información 
+ // private apiUrl = 'https://nodeproyectofinaltw-1.onrender.com'; 
+
+  private apiUrl = 'http://localhost:3000/api/citas'
+  
 
   enviarCita(cita: any) {
     return this.http.post(this.apiUrl, cita);
