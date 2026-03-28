@@ -21,5 +21,5 @@ import { MenuComponent } from "./menu/menu.component";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'MiniProyectoANGULAR';
+  title = 'Magnolia SPA';
 }
